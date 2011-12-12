@@ -1,0 +1,18 @@
+{
+  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "name": "zabbix-sender",
+  "description": "A zabbix_sender wrapper.",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "./index",
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
