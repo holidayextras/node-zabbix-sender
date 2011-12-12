@@ -14,8 +14,9 @@
     "node": "*"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "utest": "0.0.3",
     "urun": "0.0.4"
-  },
-  "devDependencies": {}
+  }
 }
