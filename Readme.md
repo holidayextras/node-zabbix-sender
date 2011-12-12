@@ -34,6 +34,13 @@ The ZabbixSender constructor takes an object which has the following defaults:
 * **bin**: The path to the zabbix_sender program. Default: `'zabbix_sender'`
 * **hostname**: The hostname to report to zebbix. Default: `os.hostname()`
 
+## NPM Maintainers
+
+The npm module for this library is maintained by:
+
+* [Felix Geisendörfer](http://github.com/felixge)
+* [Dan @ HolidayExtras?](http://github.com/danatholidayextras) < Needs access!
+
 ## License
 
 zappix-sender is licensed under the MIT license.
