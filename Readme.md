@@ -39,7 +39,7 @@ The ZabbixSender constructor takes an object which has the following defaults:
 The npm module for this library is maintained by:
 
 * [Felix Geisendörfer](http://github.com/felixge)
-* [Dan @ HolidayExtras?](http://github.com/danatholidayextras) < Needs access!
+* [Dan Jenkins](http://github.com/danjenkins)
 
 ## License
 
