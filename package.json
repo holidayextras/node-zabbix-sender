@@ -3,19 +3,30 @@
   "name": "zabbix-sender",
   "description": "A zabbix_sender wrapper.",
   "version": "0.0.3",
+  "contributors": [ 
+    {
+      "name": "Dan Jenkins",
+      "email": "dan.jenkins@holidayextras.com"
+    } 
+  ],
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/holidayextras/node-zabbix-sender"
   },
   "main": "./index",
   "scripts": {
     "test": "make test"
   },
-  "engines": {
+  "engine": {
     "node": "*"
   },
   "dependencies": {},
   "devDependencies": {
     "utest": "0.0.3",
     "urun": "0.0.4"
-  }
+  },
+  "keywords": [
+    "zabbix",
+    "zabbix_sender"
+  ]
 }
