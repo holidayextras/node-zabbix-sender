@@ -2,16 +2,13 @@
   "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
   "name": "zabbix-sender",
   "description": "A zabbix_sender wrapper.",
-  "version": "0.0.3",
-  "contributors": [ 
-    {
-      "name": "Dan Jenkins",
-      "email": "dan.jenkins@holidayextras.com"
-    } 
+  "version": "0.0.4",
+  "contributors": [
+    "Dan Jenkins <dan.jenkins@holidayextras.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/holidayextras/node-zabbix-sender"
+    "url": "git://github.com/holidayextras/node-zabbix-sender.git"
   },
   "main": "./index",
   "scripts": {
@@ -28,5 +25,8 @@
   "keywords": [
     "zabbix",
     "zabbix_sender"
-  ]
+  ],
+  "engines": {
+    "node": "*"
+  }
 }
