@@ -36,3 +36,54 @@ test('ZabbixReporter#objectToInput', {
     assert.deepEqual(input, expected);
   },
 });
+
+test('ZabbixReporter#config', {
+  'Are the options stored correctly': function() {
+    var reporter = new ZabbixReporter({hostname: 'testhost'});
+    assert.equal(reporter.config, null);
+    
+    reporter = new ZabbixReporter({config: '/some/file'});
+    assert.equal(reporter.config, "/some/file");
+
+    reporter = new ZabbixReporter({port: 666});
+    assert.equal(reporter.port, 666);
+    
+  },
+});
+
+test('ZabbixReporter#cmdLineArgs', {
+  'Are the correct command line arguments used': function() {
+    var reporter = new ZabbixReporter();
+    var expected = [
+      "--input-file",
+      "-"
+    ];
+    assert.deepEqual(reporter.getCmdArgs(), expected);
+
+    reporter = new ZabbixReporter({hostname: 'testhost'});
+    expected = [
+      "--input-file",
+      "-"
+    ];
+    assert.deepEqual(reporter.getCmdArgs(), expected);
+    
+    reporter = new ZabbixReporter({config: '/some/file'});
+    expected = [
+      "--config",
+      "/some/file",
+      "--input-file",
+      "-"
+    ];
+    assert.deepEqual(reporter.getCmdArgs(), expected);
+
+    reporter = new ZabbixReporter({port: 666});
+    expected = [
+      "--port",
+      666,
+      "--input-file",
+      "-"
+    ];
+    assert.deepEqual(reporter.getCmdArgs(), expected);
+    
+  },
+});

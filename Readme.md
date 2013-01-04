@@ -6,6 +6,9 @@ A zabbix_sender wrapper.
 
 ```
 npm install zabbix-sender
+npm install urun
+npm install utest
+
 ```
 
 ## Usage
