@@ -2,7 +2,7 @@
   "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
   "name": "zabbix-sender",
   "description": "A zabbix_sender wrapper.",
-  "version": "0.0.4",
+  "version": "0.1.4",
   "contributors": [
     "Dan Jenkins <dan.jenkins@holidayextras.com>"
   ],

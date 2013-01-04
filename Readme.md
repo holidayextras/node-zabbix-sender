@@ -6,8 +6,6 @@ A zabbix_sender wrapper.
 
 ```
 npm install zabbix-sender
-npm install urun
-npm install utest
 
 ```
 
@@ -33,9 +31,10 @@ sender.send({
 
 The ZabbixSender constructor takes an object which has the following defaults:
 
-* **config**: The configuration file to use. Default: `'/etc/zabbix/zabbix_agentd.conf'`
+* **config**: The configuration file to use. Default: (zabbix default)
 * **bin**: The path to the zabbix_sender program. Default: `'zabbix_sender'`
 * **hostname**: The hostname to report to zebbix. Default: `os.hostname()`
+* **port**: The zabbix server port to use. Default: (zabbix default) 
 
 ## NPM Maintainers
 
