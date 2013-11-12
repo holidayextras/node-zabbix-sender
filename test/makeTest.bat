@@ -1,3 +1,3 @@
 @echo off
-SET FUNCTION_FLOW_COV=
+SET ZABBIX_SENDER_COV=
 mocha -R spec --check-leaks %1

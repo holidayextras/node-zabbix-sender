@@ -1,3 +1,3 @@
 #!/bin/bash
-FUNCTION_FLOW_COV=
-mocha -R spec --timeout 7000 $1
+ZABBIX_SENDER_COV=
+mocha -R spec --check-leaks $1

@@ -4,12 +4,12 @@ var sinon = require('sinon');
 var SandboxedModule = require('sandboxed-module');
 chai.use(sinonChai);
 
-var libpath = (process.env['FUNCTION_FLOW_COV'] ? 'lib-cov/' : 'lib/');
+var libpath = (process.env['ZABBIX_SENDER_COV'] ? 'lib-cov/' : 'lib/');
 
 // The Lib we want to test
 var ZabbixSender = require('../../' + libpath + 'ZabbixSender.js');
 
-chai.Assertion.includeStack = true; // defaults to false
+chai.Assertion.includeStack = true;
 var expect = chai.expect;
 
 describe('constructer()', function() {
@@ -148,6 +148,34 @@ describe('ZabbixSender.send()', function() {
 
 	describe('data provided to send method', function() {
 
+		
+		it('dot in key', function() {
+
+			var sender = new ZabbixSenderFakeExec();
+			sender.send({'keyA.keyB' : 'propC'});
+			expect(execStub).to.be.called.Once;
+			expect(execStub).always.have.been.calledWithExactly(
+					'zabbix_sender',
+					['--input-file', '-'],
+					undefined);
+
+			expect(endSpy).to.be.called.Once;
+			expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB propC\n');
+		});
+		
+		it('property is a number with float and should be rounded', function() {
+			var sender = new ZabbixSenderFakeExec();
+			sender.send({NaNaNaNa : 123.4567});
+			expect(execStub).to.be.called.Once;
+			expect(execStub).always.have.been.calledWithExactly(
+					'zabbix_sender',
+					['--input-file', '-'],
+					undefined);
+
+			expect(endSpy).to.be.called.Once;
+			expect(endSpy).always.have.been.calledWithExactly('- NaNaNaNa 123\n');
+		});
+		
 		describe('nested data', function() {
 			it('single nested property, 2 levels', function() {
 				var sender = new ZabbixSenderFakeExec();
@@ -192,19 +220,5 @@ describe('ZabbixSender.send()', function() {
 			});
 		});
 		
-		it('dot in key', function() {
-
-			var sender = new ZabbixSenderFakeExec();
-			sender.send({'keyA.keyB' : 'propC'});
-			expect(execStub).to.be.called.Once;
-			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
-					undefined);
-
-			expect(endSpy).to.be.called.Once;
-			expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB propC\n');
-		});
 	});
-
 });

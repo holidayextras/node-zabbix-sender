@@ -1,4 +1,4 @@
 @echo off
-SET FUNCTION_FLOW_COV=1
-jscoverage --no-highlight model model-cov
+SET ZABBIX_SENDER_COV=1
+jscoverage --no-highlight ../lib ../lib-cov
 mocha -R html-cov %1 >coverage.html
