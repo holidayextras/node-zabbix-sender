@@ -6,7 +6,6 @@ A zabbix_sender wrapper.
 
 ```
 npm install zabbix-sender
-
 ```
 
 ## Usage

@@ -21,7 +21,8 @@
   "engines": {
     "node": "*"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "chai": "1.8.1",
     "sinon": "1.7.3",
