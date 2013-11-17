@@ -2,6 +2,6 @@ SHELL := /bin/bash
 NODE = node
 
 test:
-	@$(NODE) ./test/run.js
+	/test/makeTest.sh
 
 .PHONY: test

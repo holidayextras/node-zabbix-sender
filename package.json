@@ -2,9 +2,10 @@
   "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
   "name": "zabbix-sender",
   "description": "A zabbix_sender wrapper.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "contributors": [
-    "Dan Jenkins <dan.jenkins@holidayextras.com>"
+    "Dan Jenkins <dan.jenkins@holidayextras.com>",
+    "Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>"
   ],
   "repository": {
     "type": "git",
@@ -17,16 +18,18 @@
   "engine": {
     "node": "*"
   },
+  "engines": {
+    "node": "*"
+  },
   "dependencies": {},
   "devDependencies": {
-    "utest": "0.0.3",
-    "urun": "0.0.4"
+    "chai": "1.8.1",
+    "sinon": "1.7.3",
+    "sinon-chai": "2.4.0",
+    "sandboxed-module": "0.3.0"
   },
   "keywords": [
     "zabbix",
     "zabbix_sender"
-  ],
-  "engines": {
-    "node": "*"
-  }
+  ]
 }

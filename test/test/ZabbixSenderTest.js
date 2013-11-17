@@ -19,7 +19,8 @@ describe('constructer()', function() {
 			config : undefined,
 			bin : 'zabbix_sender',
 			hostname : '-',
-			port : undefined
+			port : undefined,
+			joinString : '.'
 		});
 	});
 });
@@ -148,7 +149,7 @@ describe('ZabbixSender.send()', function() {
 
 	describe('data provided to send method', function() {
 
-		
+
 		it('dot in key', function() {
 
 			var sender = new ZabbixSenderFakeExec();
@@ -162,7 +163,7 @@ describe('ZabbixSender.send()', function() {
 			expect(endSpy).to.be.called.Once;
 			expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB propC\n');
 		});
-		
+
 		it('property is a number with float and should be rounded', function() {
 			var sender = new ZabbixSenderFakeExec();
 			sender.send({NaNaNaNa : 123.4567});
@@ -175,50 +176,63 @@ describe('ZabbixSender.send()', function() {
 			expect(endSpy).to.be.called.Once;
 			expect(endSpy).always.have.been.calledWithExactly('- NaNaNaNa 123\n');
 		});
-		
+
 		describe('nested data', function() {
-			it('single nested property, 2 levels', function() {
-				var sender = new ZabbixSenderFakeExec();
-				sender.send({keyA : {keyB : 'propC'}});
-				expect(execStub).to.be.called.Once;
-				expect(execStub).always.have.been.calledWithExactly(
-						'zabbix_sender',
-						['--input-file', '-'],
-						undefined);
 
-				expect(endSpy).to.be.called.Once;
-				expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB propC\n');
-			});
-			it('single nested property, 3 levels', function() {
-				var sender = new ZabbixSenderFakeExec();
-				sender.send({keyA : {keyB : {keyC : 'propD'}}});
-				expect(execStub).to.be.called.Once;
-				expect(execStub).always.have.been.calledWithExactly(
-						'zabbix_sender',
-						['--input-file', '-'],
-						undefined);
+			runTestsWithGivenJoinString('.');
+			runTestsWithGivenJoinString('_');
 
-				expect(endSpy).to.be.called.Once;
-				expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB.keyC propD\n');
-			});
-			it('mixing 2nd level and 3rd level properties', function() {
-				var sender = new ZabbixSenderFakeExec();
-				sender.send({keyA : {
-						keyB : {
-							keyC : 'propD'
-						}, keyX : 'propZ'
-					}
+			function runTestsWithGivenJoinString(joinString) {
+
+				describe('running Test with joinString: "' + joinString + '"', function() {
+
+					var options = {joinString : joinString};
+
+					it('single nested property, 2 levels', function() {
+						var sender = new ZabbixSenderFakeExec(options);
+						sender.send({keyA : {keyB : 'propC'}});
+						expect(execStub).to.be.called.Once;
+						expect(execStub).always.have.been.calledWithExactly(
+								'zabbix_sender',
+								['--input-file', '-'],
+								undefined);
+
+						expect(endSpy).to.be.called.Once;
+						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB propC\n');
+					});
+
+					it('single nested property, 3 levels', function() {
+						var sender = new ZabbixSenderFakeExec(options);
+						sender.send({keyA : {keyB : {keyC : 'propD'}}});
+						expect(execStub).to.be.called.Once;
+						expect(execStub).always.have.been.calledWithExactly(
+								'zabbix_sender',
+								['--input-file', '-'],
+								undefined);
+
+						expect(endSpy).to.be.called.Once;
+						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB' + joinString + 'keyC propD\n');
+					});
+
+					it('mixing 2nd level and 3rd level properties', function() {
+						var sender = new ZabbixSenderFakeExec(options);
+						sender.send({keyA : {
+								keyB : {
+									keyC : 'propD'
+								}, keyX : 'propZ'
+							}
+						});
+						expect(execStub).to.be.called.Once;
+						expect(execStub).always.have.been.calledWithExactly(
+								'zabbix_sender',
+								['--input-file', '-'],
+								undefined);
+
+						expect(endSpy).to.be.called.Once;
+						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB' + joinString + 'keyC propD\n- keyA' + joinString + 'keyX propZ\n');
+					});
 				});
-				expect(execStub).to.be.called.Once;
-				expect(execStub).always.have.been.calledWithExactly(
-						'zabbix_sender',
-						['--input-file', '-'],
-						undefined);
-
-				expect(endSpy).to.be.called.Once;
-				expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB.keyC propD\n- keyA.keyX propZ\n');
-			});
+			}
 		});
-		
 	});
 });
