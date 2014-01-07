@@ -1,7 +1,7 @@
 var chai = require('chai');
 var sinonChai = require("sinon-chai");
 var sinon = require('sinon');
-var SandboxedModule = require('sandboxed-module');
+var proxyquire = require('proxyquire');
 chai.use(sinonChai);
 
 var libpath = (process.env['ZABBIX_SENDER_COV'] ? 'lib-cov/' : 'lib/');
@@ -38,9 +38,9 @@ describe('ZabbixSender.send()', function() {
 			}
 		});
 
-		ZabbixSenderFakeExec = SandboxedModule.require(
+		ZabbixSenderFakeExec = proxyquire(
 				'../../' + libpath + 'ZabbixSender.js',
-				{requires : {'child_process' : {execFile : execStub}}}
+				{'child_process' : {execFile : execStub}}
 		);
 
 	});
