@@ -1,36 +1,41 @@
 {
-  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
-  "name": "zabbix-sender",
-  "description": "A zabbix_sender wrapper.",
-  "version": "0.2.0",
-  "contributors": [
-    "Dan Jenkins <dan.jenkins@holidayextras.com>",
-    "Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/holidayextras/node-zabbix-sender.git"
-  },
-  "main": "./index",
-  "scripts": {
-    "test": "make test"
-  },
-  "engine": {
-    "node": "*"
-  },
-  "engines": {
-    "node": "*"
-  },
-  "dependencies": {
-  },
-  "devDependencies": {
-    "chai": "1.8.1",
-    "sinon": "1.7.3",
-    "sinon-chai": "2.4.0",
-    "proxyquire": "~0.5.1"
-  },
-  "keywords": [
-    "zabbix",
-    "zabbix_sender"
-  ]
+	"author" : "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+	"name" : "zabbix-sender",
+	"description" : "A zabbix_sender wrapper.",
+	"version" : "0.2.0",
+	"contributors" : [
+		"Dan Jenkins <dan.jenkins@holidayextras.com>",
+		"Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>"
+	],
+	"repository" : {
+		"type" : "git",
+		"url" : "git://github.com/holidayextras/node-zabbix-sender.git"
+	},
+	"main" : "./index",
+	"scripts" : {
+		"test" : "grunt unit"
+	},
+	"engine" : {
+		"node" : "*"
+	},
+	"engines" : {
+		"node" : "*"
+	},
+	"dependencies" : {},
+	"devDependencies" : {
+		"chai" : "1.9.2",
+		"grunt" : "^0.4.5",
+		"grunt-contrib-clean" : "^0.6.0",
+		"grunt-contrib-jshint" : "^0.10.0",
+		"grunt-jscoverage" : "^0.1.3",
+		"grunt-mocha-test" : "^0.12.1",
+		"mocha" : "^1.21.5",
+		"proxyquire" : "1.0.1",
+		"sinon" : "1.10.3",
+		"sinon-chai" : "2.5.0"
+	},
+	"keywords" : [
+		"zabbix",
+		"zabbix_sender"
+	]
 }

@@ -1,25 +1,20 @@
-var chai = require('chai');
-var sinonChai = require("sinon-chai");
-var sinon = require('sinon');
-var proxyquire = require('proxyquire');
-chai.use(sinonChai);
-
-var libpath = (process.env['ZABBIX_SENDER_COV'] ? 'lib-cov/' : 'lib/');
-
 // The Lib we want to test
-var ZabbixSender = require('../../' + libpath + 'ZabbixSender.js');
-
-chai.Assertion.includeStack = true;
+var ZabbixSender = require(path.join(PATH_TO_ROOT, 'ZabbixSender.js'));
 var expect = chai.expect;
+
+var binLocation = '/usr/bin/zabbix_sender';
 
 describe('constructer()', function() {
 	it('checking default options', function() {
 		var sender = new ZabbixSender();
 		expect(sender.options).to.be.deep.equal({
-			config : undefined,
-			bin : 'zabbix_sender',
+			config : '/etc/zabbix/zabbix_agentd.conf',
+			bin : binLocation,
+			debug : false,
+			log : false,
 			hostname : '-',
 			port : undefined,
+			server : undefined,
 			joinString : '.'
 		});
 	});
@@ -29,6 +24,7 @@ describe('ZabbixSender.send()', function() {
 	var endSpy;
 	var execStub;
 	var ZabbixSenderFakeExec;
+	var expectedDefaultEncodedOptions = ['--config', '/etc/zabbix/zabbix_agentd.conf', '--input-file', '-'];
 
 	beforeEach(function() {
 		endSpy = sinon.spy();
@@ -39,7 +35,7 @@ describe('ZabbixSender.send()', function() {
 		});
 
 		ZabbixSenderFakeExec = proxyquire(
-				'../../' + libpath + 'ZabbixSender.js',
+				path.join(PATH_TO_ROOT, 'ZabbixSender.js'),
 				{'child_process' : {execFile : execStub}}
 		);
 
@@ -47,15 +43,14 @@ describe('ZabbixSender.send()', function() {
 
 	describe('options used correctly', function() {
 
-
 		it('default', function() {
 
 			var sender = new ZabbixSenderFakeExec();
 			sender.send({});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					undefined
 					);
 			expect(endSpy).to.be.called.Once;
@@ -68,7 +63,7 @@ describe('ZabbixSender.send()', function() {
 			sender.send({});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
+					binLocation,
 					['--config', './test/file.js', '--input-file', '-'],
 					undefined
 					);
@@ -82,7 +77,7 @@ describe('ZabbixSender.send()', function() {
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
 					'./test/zabbix_sender.exe',
-					['--input-file', '-'],
+					expectedDefaultEncodedOptions,
 					undefined
 					);
 			expect(endSpy).to.be.called.Once;
@@ -94,8 +89,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--port', 12345, '--input-file', '-'],
+					binLocation,
+					['--config', '/etc/zabbix/zabbix_agentd.conf', '--port', 12345, '--input-file', '-'],
 					undefined
 					);
 			expect(endSpy).to.be.called.Once;
@@ -107,8 +102,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					undefined);
 
 			expect(endSpy).to.be.called.Once;
@@ -120,8 +115,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({key : 'value'});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					undefined);
 
 			expect(endSpy).to.be.called.Once;
@@ -137,8 +132,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({}, errorCallback);
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					errorCallback);
 
 			expect(errorCallback).to.be.not.called;
@@ -156,8 +151,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({'keyA.keyB' : 'propC'});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					undefined);
 
 			expect(endSpy).to.be.called.Once;
@@ -169,8 +164,8 @@ describe('ZabbixSender.send()', function() {
 			sender.send({NaNaNaNa : 123.4567});
 			expect(execStub).to.be.called.Once;
 			expect(execStub).always.have.been.calledWithExactly(
-					'zabbix_sender',
-					['--input-file', '-'],
+					binLocation,
+					expectedDefaultEncodedOptions,
 					undefined);
 
 			expect(endSpy).to.be.called.Once;
@@ -193,8 +188,8 @@ describe('ZabbixSender.send()', function() {
 						sender.send({keyA : {keyB : 'propC'}});
 						expect(execStub).to.be.called.Once;
 						expect(execStub).always.have.been.calledWithExactly(
-								'zabbix_sender',
-								['--input-file', '-'],
+								binLocation,
+								expectedDefaultEncodedOptions,
 								undefined);
 
 						expect(endSpy).to.be.called.Once;
@@ -206,8 +201,8 @@ describe('ZabbixSender.send()', function() {
 						sender.send({keyA : {keyB : {keyC : 'propD'}}});
 						expect(execStub).to.be.called.Once;
 						expect(execStub).always.have.been.calledWithExactly(
-								'zabbix_sender',
-								['--input-file', '-'],
+								binLocation,
+								expectedDefaultEncodedOptions,
 								undefined);
 
 						expect(endSpy).to.be.called.Once;
@@ -224,8 +219,8 @@ describe('ZabbixSender.send()', function() {
 						});
 						expect(execStub).to.be.called.Once;
 						expect(execStub).always.have.been.calledWithExactly(
-								'zabbix_sender',
-								['--input-file', '-'],
+								binLocation,
+								expectedDefaultEncodedOptions,
 								undefined);
 
 						expect(endSpy).to.be.called.Once;
