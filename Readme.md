@@ -6,7 +6,6 @@ A zabbix_sender wrapper.
 
 ```
 npm install zabbix-sender
-
 ```
 
 ## Usage
@@ -27,14 +26,22 @@ sender.send({
 });
 ```
 
+## Nested properties
+
+Nested properties are represented as flat strings. The join Character can be defined via the "joinString" option.
+
 ## Configuration options
 
 The ZabbixSender constructor takes an object which has the following defaults:
 
-* **config**: The configuration file to use. Default: (zabbix default)
-* **bin**: The path to the zabbix_sender program. Default: `'zabbix_sender'`
-* **hostname**: The hostname to report to zebbix. Default: `os.hostname()`
-* **port**: The zabbix server port to use. Default: (zabbix default) 
+* **config**: The configuration file to use. Default: `/etc/zabbix/zabbix_agentd.conf`
+* **bin**: The path to the zabbix_sender program. Default: `/usr/bin/zabbix_sender`
+* **hostname**: The hostname to report to zebbix. Default: `-` (zabbix default)
+* **server**: The zabbix server (IP or hostname) to use. Default: (zabbix default)
+* **port**: The zabbix server port to use. Default: (zabbix default)
+* **debug**: If set to true, the binary will not be called. Default : `false`
+* **log**: Output a message on the console, when data is send to the server. Default : `false`
+* **joinString**: String for concatenating nested object properties. Default: `.`
 
 ## NPM Maintainers
 
