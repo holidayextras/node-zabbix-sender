@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 				src : ['test/unit/**/*.js'],
 				options : {
 					reporter : 'html-cov',
-					captureFile : 'coverage.html',
+					captureFile : 'test/coverage.html',
 					quiet : true,
 					require : 'test/coverageSetup.js'
 				}
