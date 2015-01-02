@@ -5,7 +5,8 @@
 	"version" : "0.2.0",
 	"contributors" : [
 		"Dan Jenkins <dan.jenkins@holidayextras.com>",
-		"Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>"
+		"Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>",
+		"Mark Terry <mark.terry@holidayextras.com>"
 	],
 	"repository" : {
 		"type" : "git",
@@ -25,6 +26,7 @@
 	"devDependencies" : {
 		"chai" : "1.9.2",
 		"grunt" : "^0.4.5",
+		"grunt-cli" : "^0.1.13",
 		"grunt-contrib-clean" : "^0.6.0",
 		"grunt-contrib-jshint" : "^0.10.0",
 		"grunt-jscoverage" : "^0.1.3",
