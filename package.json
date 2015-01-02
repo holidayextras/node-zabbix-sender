@@ -5,7 +5,8 @@
 	"version" : "0.2.0",
 	"contributors" : [
 		"Dan Jenkins <dan.jenkins@holidayextras.com>",
-		"Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>"
+		"Pascal Pflaum <pascal@heutewirdnichtmehrgearbeitet.de>",
+		"Mark Terry <mark.terry@holidayextras.com>"
 	],
 	"repository" : {
 		"type" : "git",
