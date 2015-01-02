@@ -16,9 +16,6 @@
 	"scripts" : {
 		"test" : "grunt unit"
 	},
-	"engine" : {
-		"node" : "*"
-	},
 	"engines" : {
 		"node" : "*"
 	},
