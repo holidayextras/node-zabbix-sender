@@ -43,13 +43,6 @@ The ZabbixSender constructor takes an object which has the following defaults:
 * **log**: Output a message on the console, when data is send to the server. Default : `false`
 * **joinString**: String for concatenating nested object properties. Default: `.`
 
-## NPM Maintainers
-
-The npm module for this library is maintained by:
-
-* [Felix Geisendörfer](http://github.com/felixge)
-* [Dan Jenkins](http://github.com/danjenkins)
-
 ## License
 
 zappix-sender is licensed under the MIT license.
