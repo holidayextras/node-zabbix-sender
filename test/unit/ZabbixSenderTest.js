@@ -20,6 +20,22 @@ describe('constructer()', function() {
 	});
 });
 
+describe('call without new', function() {
+	it('checking default options', function() {
+		var sender = ZabbixSender();
+		expect(sender.options).to.be.deep.equal({
+			config : '/etc/zabbix/zabbix_agentd.conf',
+			bin : binLocation,
+			debug : false,
+			log : false,
+			hostname : '-',
+			port : undefined,
+			server : undefined,
+			joinString : '.'
+		});
+	});
+});
+
 describe('ZabbixSender.send()', function() {
 	var endSpy;
 	var execStub;
