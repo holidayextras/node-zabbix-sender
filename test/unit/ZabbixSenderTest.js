@@ -21,15 +21,18 @@ describe('constructer()', function() {
 });
 
 describe('ZabbixSender.send()', function() {
+	var onSpy;
 	var endSpy;
 	var execStub;
 	var ZabbixSenderFakeExec;
 	var expectedDefaultEncodedOptions = ['--config', '/etc/zabbix/zabbix_agentd.conf', '--input-file', '-'];
 
 	beforeEach(function() {
+		onSpy = sinon.spy();
 		endSpy = sinon.spy();
 		execStub = sinon.stub().returns({
 			stdin : {
+				on : onSpy,
 				end : endSpy
 			}
 		});
@@ -53,6 +56,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined
 					);
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 
 		});
@@ -67,6 +71,7 @@ describe('ZabbixSender.send()', function() {
 					['--config', './test/file.js', '--input-file', '-'],
 					undefined
 					);
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 		});
 
@@ -80,6 +85,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined
 					);
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 		});
 
@@ -93,6 +99,7 @@ describe('ZabbixSender.send()', function() {
 					['--config', '/etc/zabbix/zabbix_agentd.conf', '--port', 12345, '--input-file', '-'],
 					undefined
 					);
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 		});
 
@@ -106,6 +113,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined);
 
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 		});
 
@@ -119,6 +127,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined);
 
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 			expect(endSpy).always.have.been.calledWithExactly('HOSTNAME key value\n');
 		});
@@ -137,6 +146,7 @@ describe('ZabbixSender.send()', function() {
 					errorCallback);
 
 			expect(errorCallback).to.be.not.called;
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 
 		});
@@ -155,6 +165,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined);
 
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 			expect(endSpy).always.have.been.calledWithExactly('- keyA.keyB propC\n');
 		});
@@ -168,6 +179,7 @@ describe('ZabbixSender.send()', function() {
 					expectedDefaultEncodedOptions,
 					undefined);
 
+			expect(onSpy).to.be.called.Once;
 			expect(endSpy).to.be.called.Once;
 			expect(endSpy).always.have.been.calledWithExactly('- NaNaNaNa 123\n');
 		});
@@ -192,6 +204,7 @@ describe('ZabbixSender.send()', function() {
 								expectedDefaultEncodedOptions,
 								undefined);
 
+						expect(onSpy).to.be.called.Once;
 						expect(endSpy).to.be.called.Once;
 						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB propC\n');
 					});
@@ -205,6 +218,7 @@ describe('ZabbixSender.send()', function() {
 								expectedDefaultEncodedOptions,
 								undefined);
 
+						expect(onSpy).to.be.called.Once;
 						expect(endSpy).to.be.called.Once;
 						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB' + joinString + 'keyC propD\n');
 					});
@@ -223,6 +237,7 @@ describe('ZabbixSender.send()', function() {
 								expectedDefaultEncodedOptions,
 								undefined);
 
+						expect(onSpy).to.be.called.Once;
 						expect(endSpy).to.be.called.Once;
 						expect(endSpy).always.have.been.calledWithExactly('- keyA' + joinString + 'keyB' + joinString + 'keyC propD\n- keyA' + joinString + 'keyX propZ\n');
 					});
